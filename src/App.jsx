@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Header from './components/Header.jsx';
 import Shop from './components/Shop.jsx';
 import { DUMMY_PRODUCTS } from './dummy-products.js';
+import { CartContext } from './store/shopping-cart-context.jsx';
 
 function App() {
   const [shoppingCart, setShoppingCart] = useState({
@@ -10,6 +11,7 @@ function App() {
   });
 
   function handleAddItemToCart(id) {
+    console.log('item being added')
     setShoppingCart((prevShoppingCart) => {
       const updatedItems = [...prevShoppingCart.items];
 
@@ -65,13 +67,18 @@ function App() {
     });
   }
 
+  const ctxValue = {
+    items:shoppingCart.items,
+    addItemToCart : handleAddItemToCart,
+    updateCartItemQuantity : handleUpdateCartItemQuantity
+  };
+
   return (
     <>
-      <Header
-        cart={shoppingCart}
-        onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
-      />
-      <Shop onAddItemToCart={handleAddItemToCart} />
+    <CartContext.Provider value={ctxValue}>
+      <Header/>
+      <Shop />
+    </CartContext.Provider>
     </>
   );
 }
