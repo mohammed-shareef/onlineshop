@@ -15,7 +15,7 @@ export default function CartContextProvider({children}){
       });
     
       function handleAddItemToCart(id) {
-        console.log('item being added')
+         
         setShoppingCart((prevShoppingCart) => {
           const updatedItems = [...prevShoppingCart.items];
     
